@@ -26,9 +26,6 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
 
-    - name: Terraform Init
-      run: terraform init
-
    # apply previously generated Terraform Plan
     # from the terraform.tfplan file in the branch
     - name: Terraform Apply
