@@ -31,4 +31,4 @@ jobs:
 
     # generate Terraform Plan and store in .tfplan file
     - name: Terraform Plan
-      run: terraform plan -destroy -out=terraform.tfplan
+      run: terraform plan -destroy
