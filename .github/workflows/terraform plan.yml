@@ -31,7 +31,7 @@ jobs:
 
     # generate Terraform Plan and store in .tfplan file
     - name: Terraform Plan
-      run: terraform plan -out:terraform.tfplan
+      run: terraform plan -out=terraform.tfplan
 
     # commit Terraform plan if running on 'main' branch
     # commit is made to the 'terraform-plan' branch
