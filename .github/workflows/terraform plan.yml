@@ -31,3 +31,9 @@ jobs:
     # generate Terraform Plan and store in .tfplan file
     - name: Terraform Plan
       run: terraform plan -out=terraform.tfplan
+
+    # apply previously generated Terraform Plan
+    # from the terraform.tfplan file in the branch
+    - name: Terraform Apply
+      run: terraform apply "terraform.tfplan"
+
