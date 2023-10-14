@@ -2,9 +2,8 @@ name: Terraform Plan
 
 # configure to run on merges to 'main' branch
 on:
-  workflow_dispatch
-  #push:
-    #branches: [ main ]
+  push:
+    branches: [ main ]
 
 jobs:
   deploy:
