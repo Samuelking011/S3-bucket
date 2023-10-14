@@ -32,14 +32,3 @@ jobs:
     # generate Terraform Plan and store in .tfplan file
     - name: Terraform Plan
       run: terraform plan -out=terraform.tfplan
-
-    # commit Terraform plan if running on 'main' branch
-    # commit is made to the 'terraform-plan' branch
-    - name: Commit Terraform Plan for Approval
-      if: github.ref == 'refs/heads/main'
-      uses: peter-evans/create-pull-request@v4
-      with:
-        commit-message: 'Terraform Plan'
-        branch: 'terraform-plan'
-        base: 'main'
-        token: ${{ secrets.GITHUB_TOKEN }}
