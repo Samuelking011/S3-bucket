@@ -26,6 +26,9 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
 
+    - name: Terraform Init
+      run: terraform init
+
     # generate Terraform Plan and store in .tfplan file
     - name: Terraform Plan
       run: terraform plan -destroy -out=destroy.tfplan
