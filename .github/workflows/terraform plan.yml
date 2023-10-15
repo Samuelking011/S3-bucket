@@ -1,39 +1,33 @@
-name: Terraform Plan
+name: PR Plan
 
-# configure to run on merges to 'main' branch
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  TERRAFORM_CLOUD_TOKENS: terraform.example.com=${{ secrets.TF_REGISTRY_TOKEN }}
+  TERRAFORM_SSH_KEY: ${{ secrets.TERRAFORM_SSH_KEY }}
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
-  deploy:
+  plan:
     runs-on: ubuntu-latest
-
+    name: Create terraform plan
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    # be sure to authenticate with cloud provider
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-          aws-access-key-id: '${{ secrets.TF_USER_AWS_KEY }}'
-          aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
-          aws-region: us-east-1
-
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-
-    - name: Terraform Init
-      run: terraform init
-
-    # generate Terraform Plan and store in .tfplan file
-    - name: Terraform Plan
-      run: terraform plan -out=terraform.tfplan
-
-    # apply previously generated Terraform Plan
-    # from the terraform.tfplan file in the branch
-    - name: Terraform Apply
-      run: terraform apply "terraform.tfplan"
-
+      - name: terraform plan
+        uses: dflook/terraform-plan@v1
+        with:
+          path: my-terraform-config
+          label: production
+          workspace: prod
+          var_file: env/prod.tfvars
+          variables: |
+            turbo_mode=true
+          backend_config_file: env/prod.backend
+          backend_config: token=${{ secrets.BACKEND_TOKEN }}
