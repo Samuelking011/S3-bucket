@@ -23,7 +23,7 @@ jobs:
       - name: terraform plan
         uses: dflook/terraform-plan@v1
         with:
-          path: 
+          path: prod
           label: production
           workspace: prod
           var_file: env/prod.tfvars
